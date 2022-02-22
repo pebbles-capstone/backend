@@ -1,0 +1,140 @@
+service: capstoneAPI
+
+provider:
+  name: aws
+  stage: dev
+  runtime: nodejs12.x
+  timeout: 60 # optional, in seconds, default is 6
+  memorySize: 1024 # optional, in MB, default is 1024
+  tracing:
+    lambda: true # optional, enables tracing for all functions (can be true (true equals 'Active') 'Active' or 'PassThrough')
+
+functions:
+  getUser:
+    handler: dist/userService.getUser
+    events:
+      - http:
+          path: user/{userId}
+          method: GET
+          cors: true
+          integration: lambda
+          authorizer:
+            name: capstoneCognito
+            type: COGNITO_USER_POOLS
+            arn:
+              Fn::GetAtt:
+                - AuthProvider
+                - Arn
+  updateUser:
+    handler: dist/userService.updateUser
+    events:
+      - http:
+          path: user/{userId}
+          method: POST
+          cors: true
+          integration: lambda
+          authorizer:
+            name: capstoneCognito
+            type: COGNITO_USER_POOLS
+            arn:
+              Fn::GetAtt:
+                - AuthProvider
+                - Arn
+      - http:
+          path: user
+          method: POST
+          cors: true
+          integration: lambda
+          authorizer:
+            name: capstoneCognito
+            type: COGNITO_USER_POOLS
+            arn:
+              Fn::GetAtt:
+                - AuthProvider
+                - Arn
+  deleteUser:
+    handler: dist/userService.deleteUser
+    events:
+      - http:
+          path: user/{userId}
+          method: DELETE
+          cors: true
+          integration: lambda
+          authorizer:
+            name: capstoneCognito
+            type: COGNITO_USER_POOLS
+            arn:
+              Fn::GetAtt:
+                - AuthProvider
+                - Arn
+
+  getProjects:
+    handler: dist/projectService.getProjects
+    events:
+      - http:
+          path: projects/{projType}
+          method: GET
+          cors: true
+          integration: lambda
+          authorizer:
+            name: capstoneCognito
+            type: COGNITO_USER_POOLS
+            arn:
+              Fn::GetAtt:
+                - AuthProvider
+                - Arn
+
+  getRecs:
+    handler: dist/recService.getRecs
+    events:
+      - http:
+          path: recs/{userId}
+          method: GET
+          cors: true
+          integration: lambda
+          authorizer:
+            name: capstoneCognito
+            type: COGNITO_USER_POOLS
+            arn:
+              Fn::GetAtt:
+                - AuthProvider
+                - Arn
+
+resources:
+  Resources:
+    AuthProvider:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: Capstone-dev-auth
+        AdminCreateUserConfig:
+          AllowAdminCreateUserOnly: false
+        UsernameAttributes:
+          - email
+        AutoVerifiedAttributes:
+          - email
+        Policies:
+          PasswordPolicy:
+            MinimumLength: 6
+            RequireLowercase: true
+            RequireNumbers: true
+            RequireSymbols: true
+            RequireUppercase: true
+
+    AuthClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        UserPoolId: !Ref AuthProvider
+
+    RecsTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: RecsTable
