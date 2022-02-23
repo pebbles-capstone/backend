@@ -195,7 +195,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/capstoneAPI/dev/1645553714425-2022-02-22T18:15:14.425Z/capstoneAPI.zip"
+          "S3Key": "serverless/capstoneAPI/dev/1645595022551-2022-02-23T05:43:42.551Z/capstoneAPI.zip"
         },
         "Handler": "dist/userService.getUser",
         "Runtime": "nodejs12.x",
@@ -223,7 +223,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/capstoneAPI/dev/1645553714425-2022-02-22T18:15:14.425Z/capstoneAPI.zip"
+          "S3Key": "serverless/capstoneAPI/dev/1645595022551-2022-02-23T05:43:42.551Z/capstoneAPI.zip"
         },
         "Handler": "dist/userService.updateUser",
         "Runtime": "nodejs12.x",
@@ -251,7 +251,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/capstoneAPI/dev/1645553714425-2022-02-22T18:15:14.425Z/capstoneAPI.zip"
+          "S3Key": "serverless/capstoneAPI/dev/1645595022551-2022-02-23T05:43:42.551Z/capstoneAPI.zip"
         },
         "Handler": "dist/userService.deleteUser",
         "Runtime": "nodejs12.x",
@@ -279,7 +279,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/capstoneAPI/dev/1645553714425-2022-02-22T18:15:14.425Z/capstoneAPI.zip"
+          "S3Key": "serverless/capstoneAPI/dev/1645595022551-2022-02-23T05:43:42.551Z/capstoneAPI.zip"
         },
         "Handler": "dist/projectService.getProjects",
         "Runtime": "nodejs12.x",
@@ -307,7 +307,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/capstoneAPI/dev/1645553714425-2022-02-22T18:15:14.425Z/capstoneAPI.zip"
+          "S3Key": "serverless/capstoneAPI/dev/1645595022551-2022-02-23T05:43:42.551Z/capstoneAPI.zip"
         },
         "Handler": "dist/recService.getRecs",
         "Runtime": "nodejs12.x",
@@ -665,7 +665,7 @@
         "ApiKeyRequired": false,
         "AuthorizationType": "COGNITO_USER_POOLS",
         "AuthorizerId": {
-          "Ref": "CapstoneCognitoApiGatewayAuthorizer"
+          "Ref": "AuthorizerApiGatewayAuthorizer"
         },
         "Integration": {
           "IntegrationHttpMethod": "POST",
@@ -839,7 +839,7 @@
           }
         ]
       },
-      "DependsOn": "CapstoneCognitoApiGatewayAuthorizer"
+      "DependsOn": "AuthorizerApiGatewayAuthorizer"
     },
     "ApiGatewayMethodUserUseridVarPost": {
       "Type": "AWS::ApiGateway::Method",
@@ -855,7 +855,7 @@
         "ApiKeyRequired": false,
         "AuthorizationType": "COGNITO_USER_POOLS",
         "AuthorizerId": {
-          "Ref": "CapstoneCognitoApiGatewayAuthorizer"
+          "Ref": "AuthorizerApiGatewayAuthorizer"
         },
         "Integration": {
           "IntegrationHttpMethod": "POST",
@@ -1029,7 +1029,7 @@
           }
         ]
       },
-      "DependsOn": "CapstoneCognitoApiGatewayAuthorizer"
+      "DependsOn": "AuthorizerApiGatewayAuthorizer"
     },
     "ApiGatewayMethodUserPost": {
       "Type": "AWS::ApiGateway::Method",
@@ -1045,7 +1045,7 @@
         "ApiKeyRequired": false,
         "AuthorizationType": "COGNITO_USER_POOLS",
         "AuthorizerId": {
-          "Ref": "CapstoneCognitoApiGatewayAuthorizer"
+          "Ref": "AuthorizerApiGatewayAuthorizer"
         },
         "Integration": {
           "IntegrationHttpMethod": "POST",
@@ -1219,7 +1219,7 @@
           }
         ]
       },
-      "DependsOn": "CapstoneCognitoApiGatewayAuthorizer"
+      "DependsOn": "AuthorizerApiGatewayAuthorizer"
     },
     "ApiGatewayMethodUserUseridVarDelete": {
       "Type": "AWS::ApiGateway::Method",
@@ -1235,7 +1235,7 @@
         "ApiKeyRequired": false,
         "AuthorizationType": "COGNITO_USER_POOLS",
         "AuthorizerId": {
-          "Ref": "CapstoneCognitoApiGatewayAuthorizer"
+          "Ref": "AuthorizerApiGatewayAuthorizer"
         },
         "Integration": {
           "IntegrationHttpMethod": "POST",
@@ -1409,7 +1409,7 @@
           }
         ]
       },
-      "DependsOn": "CapstoneCognitoApiGatewayAuthorizer"
+      "DependsOn": "AuthorizerApiGatewayAuthorizer"
     },
     "ApiGatewayMethodProjectsProjtypeVarGet": {
       "Type": "AWS::ApiGateway::Method",
@@ -1425,7 +1425,7 @@
         "ApiKeyRequired": false,
         "AuthorizationType": "COGNITO_USER_POOLS",
         "AuthorizerId": {
-          "Ref": "CapstoneCognitoApiGatewayAuthorizer"
+          "Ref": "AuthorizerApiGatewayAuthorizer"
         },
         "Integration": {
           "IntegrationHttpMethod": "POST",
@@ -1599,7 +1599,7 @@
           }
         ]
       },
-      "DependsOn": "CapstoneCognitoApiGatewayAuthorizer"
+      "DependsOn": "AuthorizerApiGatewayAuthorizer"
     },
     "ApiGatewayMethodRecsUseridVarGet": {
       "Type": "AWS::ApiGateway::Method",
@@ -1615,7 +1615,7 @@
         "ApiKeyRequired": false,
         "AuthorizationType": "COGNITO_USER_POOLS",
         "AuthorizerId": {
-          "Ref": "CapstoneCognitoApiGatewayAuthorizer"
+          "Ref": "AuthorizerApiGatewayAuthorizer"
         },
         "Integration": {
           "IntegrationHttpMethod": "POST",
@@ -1789,29 +1789,24 @@
           }
         ]
       },
-      "DependsOn": "CapstoneCognitoApiGatewayAuthorizer"
+      "DependsOn": "AuthorizerApiGatewayAuthorizer"
     },
-    "CapstoneCognitoApiGatewayAuthorizer": {
+    "AuthorizerApiGatewayAuthorizer": {
       "Type": "AWS::ApiGateway::Authorizer",
       "Properties": {
         "AuthorizerResultTtlInSeconds": 300,
         "IdentitySource": "method.request.header.Authorization",
-        "Name": "capstoneCognito",
+        "Name": "authorizer",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         },
         "Type": "COGNITO_USER_POOLS",
         "ProviderARNs": [
-          {
-            "Fn::GetAtt": [
-              "AuthProvider",
-              "Arn"
-            ]
-          }
+          "arn:aws:cognito-idp:ca-central-1:768427752868:userpool/ca-central-1_AqhhluHxU"
         ]
       }
     },
-    "ApiGatewayDeployment1645553713876": {
+    "ApiGatewayDeployment1645595021991": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -2017,38 +2012,6 @@
         }
       }
     },
-    "AuthProvider": {
-      "Type": "AWS::Cognito::UserPool",
-      "Properties": {
-        "UserPoolName": "Capstone-dev-auth",
-        "AdminCreateUserConfig": {
-          "AllowAdminCreateUserOnly": false
-        },
-        "UsernameAttributes": [
-          "email"
-        ],
-        "AutoVerifiedAttributes": [
-          "email"
-        ],
-        "Policies": {
-          "PasswordPolicy": {
-            "MinimumLength": 6,
-            "RequireLowercase": true,
-            "RequireNumbers": true,
-            "RequireSymbols": true,
-            "RequireUppercase": true
-          }
-        }
-      }
-    },
-    "AuthClient": {
-      "Type": "AWS::Cognito::UserPoolClient",
-      "Properties": {
-        "UserPoolId": {
-          "Ref": "AuthProvider"
-        }
-      }
-    },
     "RecsTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
@@ -2069,6 +2032,72 @@
           "WriteCapacityUnits": 1
         },
         "TableName": "RecsTable"
+      }
+    },
+    "UserTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "userId",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "userId",
+            "KeyType": "HASH"
+          }
+        ],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 1,
+          "WriteCapacityUnits": 1
+        },
+        "TableName": "UserTable"
+      }
+    },
+    "ProjectTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "id",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "id",
+            "KeyType": "HASH"
+          }
+        ],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 1,
+          "WriteCapacityUnits": 1
+        },
+        "TableName": "ProjectTable"
+      }
+    },
+    "ProfTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "id",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "id",
+            "KeyType": "HASH"
+          }
+        ],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 1,
+          "WriteCapacityUnits": 1
+        },
+        "TableName": "ProfTable"
       }
     }
   },

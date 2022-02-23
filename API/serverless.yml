@@ -3,6 +3,7 @@ service: capstoneAPI
 provider:
   name: aws
   stage: dev
+  region: ca-central-1
   runtime: nodejs12.x
   timeout: 60 # optional, in seconds, default is 6
   memorySize: 1024 # optional, in MB, default is 1024
@@ -19,12 +20,8 @@ functions:
           cors: true
           integration: lambda
           authorizer:
-            name: capstoneCognito
-            type: COGNITO_USER_POOLS
-            arn:
-              Fn::GetAtt:
-                - AuthProvider
-                - Arn
+            name: authorizer
+            arn: ${env:COGNITO_AUTH}
   updateUser:
     handler: dist/userService.updateUser
     events:
@@ -34,24 +31,16 @@ functions:
           cors: true
           integration: lambda
           authorizer:
-            name: capstoneCognito
-            type: COGNITO_USER_POOLS
-            arn:
-              Fn::GetAtt:
-                - AuthProvider
-                - Arn
+            name: authorizer
+            arn: ${env:COGNITO_AUTH}
       - http:
           path: user
           method: POST
           cors: true
           integration: lambda
           authorizer:
-            name: capstoneCognito
-            type: COGNITO_USER_POOLS
-            arn:
-              Fn::GetAtt:
-                - AuthProvider
-                - Arn
+            name: authorizer
+            arn: ${env:COGNITO_AUTH}
   deleteUser:
     handler: dist/userService.deleteUser
     events:
@@ -61,12 +50,8 @@ functions:
           cors: true
           integration: lambda
           authorizer:
-            name: capstoneCognito
-            type: COGNITO_USER_POOLS
-            arn:
-              Fn::GetAtt:
-                - AuthProvider
-                - Arn
+            name: authorizer
+            arn: ${env:COGNITO_AUTH}
 
   getProjects:
     handler: dist/projectService.getProjects
@@ -77,12 +62,8 @@ functions:
           cors: true
           integration: lambda
           authorizer:
-            name: capstoneCognito
-            type: COGNITO_USER_POOLS
-            arn:
-              Fn::GetAtt:
-                - AuthProvider
-                - Arn
+            name: authorizer
+            arn: ${env:COGNITO_AUTH}
 
   getRecs:
     handler: dist/recService.getRecs
@@ -93,38 +74,11 @@ functions:
           cors: true
           integration: lambda
           authorizer:
-            name: capstoneCognito
-            type: COGNITO_USER_POOLS
-            arn:
-              Fn::GetAtt:
-                - AuthProvider
-                - Arn
+            name: authorizer
+            arn: ${env:COGNITO_AUTH}
 
 resources:
   Resources:
-    AuthProvider:
-      Type: AWS::Cognito::UserPool
-      Properties:
-        UserPoolName: Capstone-dev-auth
-        AdminCreateUserConfig:
-          AllowAdminCreateUserOnly: false
-        UsernameAttributes:
-          - email
-        AutoVerifiedAttributes:
-          - email
-        Policies:
-          PasswordPolicy:
-            MinimumLength: 6
-            RequireLowercase: true
-            RequireNumbers: true
-            RequireSymbols: true
-            RequireUppercase: true
-
-    AuthClient:
-      Type: AWS::Cognito::UserPoolClient
-      Properties:
-        UserPoolId: !Ref AuthProvider
-
     RecsTable:
       Type: "AWS::DynamoDB::Table"
       Properties:
@@ -138,3 +92,45 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: RecsTable
+
+    UserTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: UserTable
+
+    ProjectTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ProjectTable
+
+    ProfTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ProfTable
