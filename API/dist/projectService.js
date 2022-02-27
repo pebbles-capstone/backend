@@ -1,10 +1,10 @@
 "use strict";
 
-const AWS = require('aws-sdk'); //eslint-disable-line import/no-extraneous-dependencies
+const AWS = require("aws-sdk"); //eslint-disable-line import/no-extraneous-dependencies
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const params = {
-  TableName: ProjectTable,
+  TableName: "ProjectTable",
 };
 
 module.exports.getProjects = (event, context, callback) => {
@@ -13,7 +13,7 @@ module.exports.getProjects = (event, context, callback) => {
       console.error(error);
       callback(null, {
         statusCode: error.statusCode || 501,
-        body: 'No Projects found',
+        body: "No Projects found",
       });
       return;
     }
