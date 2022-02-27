@@ -1,0 +1,9 @@
+{
+    "name": "pebbles-rest-services",
+    "version": "1.0.1",
+    "description": "Rest api for Pebble's backend.",
+    "author": "pebbles",
+    "license": "MIT",
+    "dependencies": {
+    }
+  }
