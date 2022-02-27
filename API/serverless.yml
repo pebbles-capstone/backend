@@ -10,6 +10,21 @@ provider:
   tracing:
     lambda: true # optional, enables tracing for all functions (can be true (true equals 'Active') 'Active' or 'PassThrough')
 
+  # TODO: change this to be custom to each lambda
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: # Gives permission to DynamoDB tables in a specific region
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:ca-central-1:*:*"
+
 functions:
   getUser:
     handler: dist/userService.getUser
