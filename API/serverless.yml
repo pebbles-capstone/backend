@@ -4,7 +4,7 @@ provider:
   name: aws
   stage: dev
   region: ca-central-1
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   timeout: 60 # optional, in seconds, default is 6
   memorySize: 1024 # optional, in MB, default is 1024
   tracing:
