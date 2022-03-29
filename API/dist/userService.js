@@ -4,6 +4,9 @@ const AWS = require("aws-sdk"); // eslint-disable-line import/no-extraneous-depe
 const uuid = require("uuid");
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
+function isEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
 // response helper
 const response = (statusCode, body, additionalHeaders) => ({
   statusCode,
@@ -20,15 +23,15 @@ module.exports.getUser = (event, context, callback) => {
     const params = {
       TableName: "UserTable",
       Key: {
-        userId: event.pathParameters.id,
+        userId: event.path.userId,
       },
     };
 
-    dynamoDb.getItem(params, (error, result) => {
-      if (error) {
+    dynamoDb.get(params, (error, result) => {
+      if (error || !result.Item || isEmpty(result?.Item)) {
         console.error(error);
         callback(null, {
-          statusCode: error.statusCode || 501,
+          statusCode: error?.statusCode || 501,
           body: "No User found",
         });
         return;
@@ -40,7 +43,7 @@ module.exports.getUser = (event, context, callback) => {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": true,
         },
-        body: JSON.stringify(result.Items),
+        body: JSON.stringify(result.Item),
       };
 
       callback(null, response);
@@ -64,10 +67,12 @@ module.exports.updateUser = (event, context, callback) => {
       return;
     }
     console.log(event.body);
-    const data = event.body;
-    console.log("Data: " + data);
+    const data = event.body.body;
+    console.log("Data: ", event.body?.body?.user);
 
     if (typeof data?.user !== "object") {
+      console.log(data?.user);
+      console.log(typeof data?.user);
       console.error("Validation Failed");
       callback(null, {
         statusCode: 400,
@@ -80,16 +85,19 @@ module.exports.updateUser = (event, context, callback) => {
     const params = {
       TableName: "UserTable",
       Item: {
-        userId: event?.pathParameters?.id || uuid.v1(),
+        userId: event?.path?.userId || uuid.v1(),
         about: data?.user?.about,
         contact: data?.user?.contact,
         discipline: data?.user?.discipline,
+        area: data?.user?.area,
+        interests: data?.user?.interests,
         name: data?.user?.name,
+        projectCount: data?.user?.projectCount,
         teamID: data?.user?.teamID,
       },
     };
 
-    dynamoDb.putItem(params, (error) => {
+    dynamoDb.put(params, (error) => {
       if (error) {
         console.error(error);
         callback(null, {
@@ -122,11 +130,11 @@ module.exports.deleteUser = (event, context, callback) => {
     const params = {
       TableName: "UserTable",
       Key: {
-        userId: event.pathParameters.id,
+        userId: event.path.userId,
       },
     };
 
-    dynamoDb.deleteItem(params, (error) => {
+    dynamoDb.delete(params, (error) => {
       if (error) {
         console.error(error);
         callback(null, {

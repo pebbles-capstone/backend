@@ -16,14 +16,15 @@ const response = (statusCode, body, additionalHeaders) => ({
 });
 module.exports.getRecs = (event, context, callback) => {
   try {
+    console.log("Event: ", event);
     const params = {
       TableName: "RecsTable",
       Key: {
-        userId: event.pathParameters.id,
+        userId: event?.path?.userId,
       },
     };
 
-    dynamoDb.getItem(params, (error, result) => {
+    dynamoDb.get(params, (error, result) => {
       if (error) {
         console.error(error);
         callback(null, {
@@ -39,7 +40,7 @@ module.exports.getRecs = (event, context, callback) => {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": true,
         },
-        body: JSON.stringify(result.Items),
+        body: JSON.stringify(result.Item),
       };
 
       callback(null, response);
