@@ -13,7 +13,7 @@ from sklearn.metrics import silhouette_score
 # dynamic route -> student data -> multiple cluster configurations in parallel -> pick best -> return top 10
 # DONE              DONE            TODO (easy)                                     DONE        
 
-def scanStudentData(dynamodb=None):
+def scanStudentData(dynamodb=None, test={}):
     if not dynamodb:
         dynamodb = boto3.resource('dynamodb')
 
@@ -22,7 +22,24 @@ def scanStudentData(dynamodb=None):
 
     data = []
     for student in response["Items"]:
-        data.append((student["userId"], [float(x) for x in student["interest_vector"]]))
+        if "interest_vector" in student:
+            data.append((student["userId"], [float(x)
+                        for x in student["interest_vector"]]))
+            test[student["userId"]] = student
+        elif "interests" in student and len(student["interests"]) == 6:
+            arr = [float(x) for x in student["interests"]]
+            if "projectCount" in student:
+                cnt = float(student["projectCount"])
+                try:
+                    arr = [float(x)/cnt for x in student["interests"]]
+                except:
+                    arr = [float(x) for x in student["interests"]]
+            if arr != [0,0,0,0,0,0]:
+                data.append((student["userId"], arr))
+            test[student["userId"]] = student
+        else:
+            print(student)
+
     
     return data
 
