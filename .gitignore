@@ -1,2 +1,4 @@
 # ignore DS_store files
 .DS_Store
+*.vscode
+node_modules
