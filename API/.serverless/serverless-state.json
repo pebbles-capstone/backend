@@ -14,6 +14,25 @@
       "tracing": {
         "lambda": true
       },
+      "iam": {
+        "role": {
+          "statements": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:DescribeTable",
+                "dynamodb:Query",
+                "dynamodb:Scan",
+                "dynamodb:GetItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem"
+              ],
+              "Resource": "arn:aws:dynamodb:ca-central-1:*:*"
+            }
+          ]
+        }
+      },
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
         "AWSTemplateFormatVersion": "2010-09-09",
@@ -176,6 +195,9 @@
                         ]
                       },
                       {
+                        "$ref": "$[\"service\"][\"provider\"][\"iam\"][\"role\"][\"statements\"][0]"
+                      },
+                      {
                         "Effect": "Allow",
                         "Action": [
                           "xray:PutTraceSegments",
@@ -212,7 +234,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/capstoneAPI/dev/1645595022551-2022-02-23T05:43:42.551Z/capstoneAPI.zip"
+                "S3Key": "serverless/capstoneAPI/dev/1645984496475-2022-02-27T17:54:56.475Z/capstoneAPI.zip"
               },
               "Handler": "dist/userService.getUser",
               "Runtime": "nodejs12.x",
@@ -240,7 +262,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/capstoneAPI/dev/1645595022551-2022-02-23T05:43:42.551Z/capstoneAPI.zip"
+                "S3Key": "serverless/capstoneAPI/dev/1645984496475-2022-02-27T17:54:56.475Z/capstoneAPI.zip"
               },
               "Handler": "dist/userService.updateUser",
               "Runtime": "nodejs12.x",
@@ -268,7 +290,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/capstoneAPI/dev/1645595022551-2022-02-23T05:43:42.551Z/capstoneAPI.zip"
+                "S3Key": "serverless/capstoneAPI/dev/1645984496475-2022-02-27T17:54:56.475Z/capstoneAPI.zip"
               },
               "Handler": "dist/userService.deleteUser",
               "Runtime": "nodejs12.x",
@@ -296,7 +318,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/capstoneAPI/dev/1645595022551-2022-02-23T05:43:42.551Z/capstoneAPI.zip"
+                "S3Key": "serverless/capstoneAPI/dev/1645984496475-2022-02-27T17:54:56.475Z/capstoneAPI.zip"
               },
               "Handler": "dist/projectService.getProjects",
               "Runtime": "nodejs12.x",
@@ -324,7 +346,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/capstoneAPI/dev/1645595022551-2022-02-23T05:43:42.551Z/capstoneAPI.zip"
+                "S3Key": "serverless/capstoneAPI/dev/1645984496475-2022-02-27T17:54:56.475Z/capstoneAPI.zip"
               },
               "Handler": "dist/recService.getRecs",
               "Runtime": "nodejs12.x",
@@ -345,54 +367,54 @@
               "GetRecsLogGroup"
             ]
           },
-          "GetUserLambdaVersiongaEdGuq6QTHGNj6FP17Tpod0zj5wu7HEmgrsXVknw8": {
+          "GetUserLambdaVersionzQAx8FXlAh2sQhXdxsBHhvTJG4T8V27mXavYu2QHc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetUserLambdaFunction"
               },
-              "CodeSha256": "SUJZIc5DZb7HrdakJGnolSW1CjEO02hyki6Ov4e4dI8="
+              "CodeSha256": "SDll9PHXX9X0FSUNQ5voWQbqWlxgNxZRmQ4so/PX+Zg="
             }
           },
-          "UpdateUserLambdaVersionn97nSanYXIERLrf1MFKe6JW0Xick5whk285gVrqo": {
+          "UpdateUserLambdaVersionA6sFMPOFbE0YLTW0PY6hP6nsA42aTUutgAkvl3hISM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateUserLambdaFunction"
               },
-              "CodeSha256": "SUJZIc5DZb7HrdakJGnolSW1CjEO02hyki6Ov4e4dI8="
+              "CodeSha256": "SDll9PHXX9X0FSUNQ5voWQbqWlxgNxZRmQ4so/PX+Zg="
             }
           },
-          "DeleteUserLambdaVersionb6v8qDek2Bu4m3PSqstXDDgsr0UkYs7dVVciKGSk0": {
+          "DeleteUserLambdaVersionXjwGCAboTWfd6H9buMqDfXAd4pkPTYhhVgYalo8B8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteUserLambdaFunction"
               },
-              "CodeSha256": "SUJZIc5DZb7HrdakJGnolSW1CjEO02hyki6Ov4e4dI8="
+              "CodeSha256": "SDll9PHXX9X0FSUNQ5voWQbqWlxgNxZRmQ4so/PX+Zg="
             }
           },
-          "GetProjectsLambdaVersionX8WWhZeOUP5E360XYxHm3tpgY0A2ZYFQ3nvESiexo2k": {
+          "GetProjectsLambdaVersionsVajJbJrzqHJeWcPNsSU04h0MG6OKZw1L5hW2LO3I": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetProjectsLambdaFunction"
               },
-              "CodeSha256": "SUJZIc5DZb7HrdakJGnolSW1CjEO02hyki6Ov4e4dI8="
+              "CodeSha256": "SDll9PHXX9X0FSUNQ5voWQbqWlxgNxZRmQ4so/PX+Zg="
             }
           },
-          "GetRecsLambdaVersionsB0fg8xbvr7E20TsEQ5g1DuODxq6JyFz4VgXx47RdkI": {
+          "GetRecsLambdaVersion6UeZvlyqBm0R0iBplKjpn8MAxrjtVml28githoJDE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetRecsLambdaFunction"
               },
-              "CodeSha256": "SUJZIc5DZb7HrdakJGnolSW1CjEO02hyki6Ov4e4dI8="
+              "CodeSha256": "SDll9PHXX9X0FSUNQ5voWQbqWlxgNxZRmQ4so/PX+Zg="
             }
           },
           "ApiGatewayRestApi": {
@@ -1823,7 +1845,7 @@
               ]
             }
           },
-          "ApiGatewayDeployment1645595021991": {
+          "ApiGatewayDeployment1645984495704": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -2130,7 +2152,7 @@
           "GetUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetUserLambdaVersiongaEdGuq6QTHGNj6FP17Tpod0zj5wu7HEmgrsXVknw8"
+              "Ref": "GetUserLambdaVersionzQAx8FXlAh2sQhXdxsBHhvTJG4T8V27mXavYu2QHc"
             },
             "Export": {
               "Name": "sls-capstoneAPI-dev-GetUserLambdaFunctionQualifiedArn"
@@ -2139,7 +2161,7 @@
           "UpdateUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateUserLambdaVersionn97nSanYXIERLrf1MFKe6JW0Xick5whk285gVrqo"
+              "Ref": "UpdateUserLambdaVersionA6sFMPOFbE0YLTW0PY6hP6nsA42aTUutgAkvl3hISM"
             },
             "Export": {
               "Name": "sls-capstoneAPI-dev-UpdateUserLambdaFunctionQualifiedArn"
@@ -2148,7 +2170,7 @@
           "DeleteUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteUserLambdaVersionb6v8qDek2Bu4m3PSqstXDDgsr0UkYs7dVVciKGSk0"
+              "Ref": "DeleteUserLambdaVersionXjwGCAboTWfd6H9buMqDfXAd4pkPTYhhVgYalo8B8"
             },
             "Export": {
               "Name": "sls-capstoneAPI-dev-DeleteUserLambdaFunctionQualifiedArn"
@@ -2157,7 +2179,7 @@
           "GetProjectsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetProjectsLambdaVersionX8WWhZeOUP5E360XYxHm3tpgY0A2ZYFQ3nvESiexo2k"
+              "Ref": "GetProjectsLambdaVersionsVajJbJrzqHJeWcPNsSU04h0MG6OKZw1L5hW2LO3I"
             },
             "Export": {
               "Name": "sls-capstoneAPI-dev-GetProjectsLambdaFunctionQualifiedArn"
@@ -2166,7 +2188,7 @@
           "GetRecsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetRecsLambdaVersionsB0fg8xbvr7E20TsEQ5g1DuODxq6JyFz4VgXx47RdkI"
+              "Ref": "GetRecsLambdaVersion6UeZvlyqBm0R0iBplKjpn8MAxrjtVml28githoJDE"
             },
             "Export": {
               "Name": "sls-capstoneAPI-dev-GetRecsLambdaFunctionQualifiedArn"
@@ -2361,7 +2383,7 @@
         "timeout": 60,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "GetUserLambdaVersiongaEdGuq6QTHGNj6FP17Tpod0zj5wu7HEmgrsXVknw8"
+        "versionLogicalId": "GetUserLambdaVersionzQAx8FXlAh2sQhXdxsBHhvTJG4T8V27mXavYu2QHc"
       },
       "updateUser": {
         "handler": "dist/userService.updateUser",
@@ -2451,7 +2473,7 @@
         "timeout": 60,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "UpdateUserLambdaVersionn97nSanYXIERLrf1MFKe6JW0Xick5whk285gVrqo"
+        "versionLogicalId": "UpdateUserLambdaVersionA6sFMPOFbE0YLTW0PY6hP6nsA42aTUutgAkvl3hISM"
       },
       "deleteUser": {
         "handler": "dist/userService.deleteUser",
@@ -2502,7 +2524,7 @@
         "timeout": 60,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "DeleteUserLambdaVersionb6v8qDek2Bu4m3PSqstXDDgsr0UkYs7dVVciKGSk0"
+        "versionLogicalId": "DeleteUserLambdaVersionXjwGCAboTWfd6H9buMqDfXAd4pkPTYhhVgYalo8B8"
       },
       "getProjects": {
         "handler": "dist/projectService.getProjects",
@@ -2553,7 +2575,7 @@
         "timeout": 60,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "GetProjectsLambdaVersionX8WWhZeOUP5E360XYxHm3tpgY0A2ZYFQ3nvESiexo2k"
+        "versionLogicalId": "GetProjectsLambdaVersionsVajJbJrzqHJeWcPNsSU04h0MG6OKZw1L5hW2LO3I"
       },
       "getRecs": {
         "handler": "dist/recService.getRecs",
@@ -2604,7 +2626,7 @@
         "timeout": 60,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "GetRecsLambdaVersionsB0fg8xbvr7E20TsEQ5g1DuODxq6JyFz4VgXx47RdkI"
+        "versionLogicalId": "GetRecsLambdaVersion6UeZvlyqBm0R0iBplKjpn8MAxrjtVml28githoJDE"
       }
     },
     "resources": {
@@ -2719,7 +2741,7 @@
     "artifact": "/Users/krishna/school/capstone/backend/API/.serverless/capstoneAPI.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/capstoneAPI/dev/1645595022551-2022-02-23T05:43:42.551Z",
+    "artifactDirectoryName": "serverless/capstoneAPI/dev/1645984496475-2022-02-27T17:54:56.475Z",
     "artifact": "capstoneAPI.zip"
   }
 }

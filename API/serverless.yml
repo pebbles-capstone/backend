@@ -4,11 +4,26 @@ provider:
   name: aws
   stage: dev
   region: ca-central-1
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   timeout: 60 # optional, in seconds, default is 6
   memorySize: 1024 # optional, in MB, default is 1024
   tracing:
     lambda: true # optional, enables tracing for all functions (can be true (true equals 'Active') 'Active' or 'PassThrough')
+
+  # TODO: change this to be custom to each lambda
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: # Gives permission to DynamoDB tables in a specific region
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:ca-central-1:*:*"
 
 functions:
   getUser:
@@ -134,3 +149,22 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ProfTable
+
+    GatewayResponseDefault4XX:
+      Type: "AWS::ApiGateway::GatewayResponse"
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: "ApiGatewayRestApi"
+    GatewayResponseDefault5XX:
+      Type: "AWS::ApiGateway::GatewayResponse"
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_5XX
+        RestApiId:
+          Ref: "ApiGatewayRestApi"
