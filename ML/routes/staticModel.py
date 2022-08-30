@@ -21,6 +21,15 @@ prof_data_path = DATA_BASE + "prof_json_data.json"
 proj_cluster_path = DATA_BASE + "proj_cluster_map.json"
 proj_data_path = DATA_BASE + "proj_json_data.json"
 
+kernels = {
+           "Photonics and Semiconductor Physics": 0,
+           "Electromagnetics and Energy Systems": 1,
+           "Analog and Digital Electronics": 2,
+           "Control, Communications and Signal Processing": 3,
+           "Computer Hardware & Computer Networks": 4,
+           "Software": 5
+          }
+
 def getStudentData(dynamodb=None, test={}):
     if not dynamodb:
         dynamodb = boto3.resource('dynamodb')
@@ -42,6 +51,12 @@ def getStudentData(dynamodb=None, test={}):
                     arr = [float(x)/cnt for x in student["interests"]]
                     if "f9c97aeb-cc50-4a1d-a561-8632faaa9b0f" == student["userId"]:
                         print("Inside:",arr)
+                    if "area" in student:
+                        for kernel, ind in kernels.items():
+                            if kernel in student["area"]:
+                                arr[ind] += 2
+                                print("Increment!!")
+
                 except:
                     arr = [float(x) for x in student["interests"]]
                     print(arr)
@@ -119,10 +134,10 @@ def buildProjRecs(proj_key, v, proj_cluster_info, proj_data):
             except:
                 print("Error: points eval failed for " + point)
         
-        sorted(weighted_p,reverse=True)
-    
+        res = sorted(weighted_p, reverse=True)
+        print(res)
         print(len(weighted_p))
-        for _,coord in weighted_p:
+        for _,coord in res:
             if coord in proj_data:
                 data = proj_data[coord]
                 proj_rec.extend(data)
